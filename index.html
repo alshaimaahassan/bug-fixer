@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+
+</head>
+
+<body>
+
+
+
+    <!-- HTML -->
+    <div class="page">
+        <h1>Bug Fixer</h1>
+        <div class="problem">
+            <textarea id="problem" placeholder="Put your code"></textarea>
+            <button id="fixBtn">FIX</button>
+        </div>
+        <div class="solution">
+            <textarea  readonly id="fixedCode" placeholder="Fixed Code"></textarea>
+            <textarea readonly id="explanation" placeholder="Explanation"></textarea>
+        </div>
+    </div>
+
+
+    <!-- js -->
+    <script type="importmap">
+                {
+                    "imports": {
+                    "@google/generative-ai": "https://esm.run/@google/generative-ai"
+                    }
+                }
+                </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+        // Fetch your API_KEY
+        const API_KEY = "AIzaSyDwSQtD0hlGSezGiF4z6DfNhybJMK1I82g";
+        // Access your API key (see "Set up your API key" above)
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        //html vars
+        let fixedCode = document.getElementById("fixedCode")
+        let explanation = document.getElementById("explanation")
+        let problem = document.getElementById("problem")
+        let fixBtn = document.getElementById("fixBtn")
+            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    
+        async function run() {
+            
+            if(problem.value ==''){
+            fixedCode.innerText = "Enter your code above"
+            explanation.innerText = "Enter your code above"
+            }else{
+                fixedCode.innerText = "loading..."
+                explanation.innerText = "loading..."
+            const prompt = problem.value
+            const result = await model.generateContent(prompt +
+            `this is a code that have an issue 
+                    solve it and return the result like
+                    object looks like this 
+                    {
+                        text:"put here your description",
+                        code:"put the right code"
+                    }
+                    Give me the JSON for this object
+                    only the JSON! Ensure that the response does not contain any backticks (\`)`
+            );
+            const response = await result.response;
+            const text = response.text();
+            console.log(text)
+            const json = JSON.parse(text);
+            console.log(json)
+            fixedCode.innerText = json.code
+            explanation.innerText = json.text
+        }
+
+}
+        fixBtn.addEventListener("click", () => {
+
+            fixedCode.innerText = ""
+            explanation.innerText = ""
+            run()
+        })
+            ;
+    </script>
+    
+    </body>
+    
+    </html>
+
+
+    
+<!-- 
+  //fixedCode.innerText = (json.code)
+  // }catch(err){
+  //     console.log(err)
+  //     text={
+  //         text:"internal error",
+  //         code: problem
+  //     }
+  
+//}
+//     console.log(text.code);
+//   let  json = JSON.parse(text) 
+//      fixedCode.innerText = -->

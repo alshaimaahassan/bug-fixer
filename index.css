@@ -1,0 +1,60 @@
+:root{
+    --Yellow: hsl(47, 88%, 63%);
+    --White: hsl(0, 0%, 100%);
+    --Grey: hsl(0, 0%, 50%);
+    --Black: hsl(0, 0%, 7%);
+}
+body {
+    background-color: var(--Yellow);
+    text-align: center;
+}
+.page{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.problem{
+    display:flex;
+    flex-direction :column;
+    justify-content:center;
+    justify-items:center;
+    align-items: center;
+    
+}
+.problem textarea{
+    max-width: 60%;
+    min-width: 50%;
+    height:80px;
+    border-radius: 20px;
+    padding: 10px;
+    border: 3px var(--Black) solid;
+    font-weight: 800;
+    font-size: large; 
+}
+.problem button{
+    background-color: var(--Black);
+    color: var(--White);
+    border: none;
+    width: 50%;
+    min-height: 40px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: large;
+}
+.problem button:hover{
+    background-color: var(--White);
+    color: var(--Black);
+    transition: ease 0.3s;
+}
+
+.solution textarea{
+    min-width:275px;
+    padding: 10px;
+    min-height: 415px;
+    border-radius: 20px;
+    border: 3px var(--Black) solid;
+    font-weight: 800;
+    font-size: large;
+}
